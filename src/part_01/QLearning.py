@@ -40,9 +40,11 @@ class QLearning:
                 next_state, reward, done, truncated, _ = self.env.step(action) 
         
                 # Adjust Q value for current state
-                old_value = 0 #pegar o valor na q-table para a combinacao action e state
-                next_max = 0 #np.max(`do maior valor considerando next_state`)
-                new_value = old_value #calcula o novo valor
+                #pegar o valor na q-table para a combinacao action e state
+                old_value = self.q_table[state, action]
+                #np.max(`do maior valor considerando next_state`)
+                next_max = np.max(self.q_table[next_state])
+                new_value = (1 - self.alpha) * old_value + self.alpha * (reward + self.gamma * next_max)
                 self.q_table[state, action] = new_value
                 # atualiza para o novo estado
                 state = next_state
