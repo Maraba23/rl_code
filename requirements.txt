@@ -1,11 +1,17 @@
+# requisito para todas as atividades
 gymnasium
 IPython
 matplotlib
 numpy
-tensorflow
 pygame
 box2d-py
 swig
+
+# parte 5 em diante
+tensorflow
+pandas
+torch
+
 
 
 
