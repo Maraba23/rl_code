@@ -10,11 +10,12 @@ warnings.simplefilter("ignore")
 env = gym.make('FrozenLake-v1', render_mode='ansi').env
 
 # only execute the following lines if you want to create a new q-table
-qlearn = Sarsa(env, alpha=0.2, gamma=0.95, epsilon=0.8, epsilon_min=0.0001, epsilon_dec=0.9999, episodes=50000)
-q_table = qlearn.train('data/q-table-frozen-lake-sarsa.csv','results/frozen_lake_sarsa')
-#q_table = loadtxt('data/q-table-frozen-lake-sarsa.csv', delimiter=',')
+# qlearn = Sarsa(env, alpha=0.9, gamma=0.99, epsilon=0.8, epsilon_min=0.0001, epsilon_dec=0.9999, episodes=100000)
+# q_table = qlearn.train('data/q-table-frozen-lake-sarsa.csv','results/frozen_lake_sarsa')
+q_table = loadtxt('data/q-table-frozen-lake-sarsa.csv', delimiter=',')
 
 env = gym.make('FrozenLake-v1', render_mode='human').env
+# desc=["SHFF", "FFHH", "HFFH", "FHFG"]
 (state, _) = env.reset()
 epochs = 0
 rewards = 0

@@ -38,7 +38,7 @@ class Sarsa:
             while not done:
                 next_state, reward, done, truncated, _ = self.env.step(a) 
                 a_prime = self.select_action(next_state)
-                new_value = (1 - self.alpha) * self.q_table[state, a] + self.alpha * (reward + self.gamma * self.q_table[next_state, a_prime] - self.q_table[state, a])
+                new_value = self.q_table[state, a] + self.alpha * (reward + self.gamma * self.q_table[next_state, a_prime] - self.q_table[state, a])
                 self.q_table[state, a] = new_value
                 state = next_state
                 a = a_prime
@@ -46,7 +46,7 @@ class Sarsa:
                 rewards=rewards+reward
 
             actions_per_episode.append(actions)
-            if i % 1 == 0:
+            if i % 100 == 0:
                 sys.stdout.write("Episodes: " + str(i) +'\r')
                 sys.stdout.flush()
             
