@@ -6,36 +6,47 @@ from numpy import loadtxt
 import warnings
 warnings.simplefilter("ignore")
 
-env = gym.make('Blackjack-v1', render_mode='ansi')
+dealer = 0
+IA = 0
+empate = 0
+for _ in range(100):
+    env = gym.make('Blackjack-v1', render_mode='human')
 
-#
-# para treinar a q-table
-#
+    #
+    # para treinar a q-table
+    #
 
-#qlearn = QLearning(env, alpha=0.01, gamma=0.001, epsilon=0.9, epsilon_min=0.01, epsilon_dec=0.99, episodes=1000000)
-#q_table = qlearn.train('data/q-table-blackjack.csv', 'results/blackjack')
+    # qlearn = QLearning(env, alpha=0.01, gamma=0.001, epsilon=0.9, epsilon_min=0.01, epsilon_dec=0.99, episodes=1000000)
+    # q_table = qlearn.train('data/q-table-blackjack.csv', 'results/blackjack')
 
-#
-# para usar a q-table treinada
-#
-q_table = loadtxt('data/q-table-blackjack.csv', delimiter=',')
+    #
+    # para usar a q-table treinada
+    #
+    q_table = loadtxt('data/q-table-blackjack.csv', delimiter=',')
 
-(state, _) = env.reset()
-done = False
+    (state, _) = env.reset()
+    done = False
 
-while not done:
-    print(state)
-    n_state = QLearning.stateNumber(state)
-    action = np.argmax(q_table[n_state])
-    state, reward, done, truncated, info = env.step(action)
-    print(f' Jogando: {action}')
-    
-print(f' Cartas do meu jogador: {env.player}')
-print(f' Cartas do dealer: {env.dealer}')
+    while not done:
+        print(state)
+        n_state = QLearning.stateNumber(state)
+        action = np.argmax(q_table[n_state])
+        state, reward, done, truncated, info = env.step(action)
+        print(f' Jogando: {action}')
+        
+    print(f' Cartas do meu jogador: {env.player}')
+    print(f' Cartas do dealer: {env.dealer}')
 
-if reward == 1:
-    print('Meu jogador venceu')
-elif reward == 0:
-    print('Jogo empatou')
-elif reward == -1:
-    print('Dealer ganhou')
+    if reward == 1:
+        print('Meu jogador venceu')
+        IA += 1
+    elif reward == 0:
+        print('Jogo empatou')
+        empate += 1
+    elif reward == -1:
+        print('Dealer ganhou')
+        dealer += 1
+
+print(f'IA ganhou {IA} vezes')
+print(f'Dealer ganhou {dealer} vezes')
+print(f'Empate {empate} vezes')

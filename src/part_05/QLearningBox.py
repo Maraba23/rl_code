@@ -86,7 +86,12 @@ class QLearningBox:
 
         # TODO Q eh um vetor tridimensional. savetxt nao trabalha com arrays com mais de 2
         # dimensoes. Eh necessario fazer ajustes para armazenar a Q-table neste caso.
-        #savetxt(filename, self.Q, delimiter=',')
+
+        # vamos fazer um reshape para salvar em um arquivo csv
+        self.Q = self.Q.reshape(self.num_states[0]*self.num_states[1], self.env.action_space.n)
+
+        # salvando a Q-table em um arquivo csv
+        savetxt(filename, self.Q, delimiter=',')
         if (plotFile is not None): self.plotactions(plotFile, ave_reward_list)
         return self.Q
 
