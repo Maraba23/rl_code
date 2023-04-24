@@ -8,7 +8,7 @@ from keras.activations import relu, linear
 from tensorflow.keras.optimizers import Adam
 from DeepQLearning import DeepQLearning
 
-env = gym.make('CartPole-v1')
+env = gym.make('CartPole-v1', render_mode='human')
 #env.seed(0)
 np.random.seed(0)
 
@@ -26,7 +26,7 @@ gamma = 0.99
 epsilon = 1.0
 epsilon_min = 0.01
 epsilon_dec = 0.99
-episodes = 200
+episodes = 150
 batch_size = 64
 memory = deque(maxlen=10000) #talvez usar uma memoria mais curta
 max_steps = 500
