@@ -52,7 +52,7 @@ class QLearning:
                 rewards=rewards+reward
 
             actions_per_episode.append(actions)
-            if i % 1 == 0:
+            if i % 100 == 0:
                 sys.stdout.write("Episodes: " + str(i) +'\r')
                 sys.stdout.flush()
             
