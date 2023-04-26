@@ -43,7 +43,12 @@ class Sarsa:
                 state = next_state
                 a = a_prime
                 actions=actions+1
-                rewards=rewards+reward
+                if reward == 1:
+                    rewards += 100
+                elif reward == 0 and not done:
+                    rewards -= 1
+                elif reward == 0 and done:
+                    rewards -= 100
 
             actions_per_episode.append(actions)
             if i % 100 == 0:
