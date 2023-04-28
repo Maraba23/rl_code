@@ -3,7 +3,7 @@ import random
 from numpy import savetxt
 import sys
 import matplotlib.pyplot as plt
-
+import pandas as pd
 #
 # This class implements the Q-Learning algorithm.
 # We can use this implementation to solve Toy text environments from Gym project. 
@@ -29,6 +29,7 @@ class QLearning:
 
     def train(self, filename, plotFile):
         actions_per_episode = []
+        reward_list = []
         for i in range(1, self.episodes+1):
             (state, _) = self.env.reset()
             rewards = 0
@@ -55,6 +56,8 @@ class QLearning:
                     rewards -= 1
                 elif reward == 0 and done:
                     rewards -= 100
+                # save to a reward to a list
+            reward_list.append(rewards)
 
 
             actions_per_episode.append(actions)
@@ -64,6 +67,8 @@ class QLearning:
             
             if self.epsilon > self.epsilon_min:
                 self.epsilon = self.epsilon * self.epsilon_dec
+        df = pd.DataFrame({'episode': [i for i in range(1, self.episodes+1)], 'rewards': reward_list})
+        df.to_csv('data/rewards.csv', mode='a',index=False, header=False)
 
         savetxt(filename, self.q_table, delimiter=',')
         if (plotFile is not None): self.plotactions(plotFile, actions_per_episode)
